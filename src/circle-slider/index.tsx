@@ -154,10 +154,17 @@ export class CircleSlider extends React.Component<IProps, IState> {
         };
     };
 
+    public countDecimals = (value: number): number => {
+        if (Math.floor(value) !== value) {
+            return value.toString().split(".")[1].length || 0;
+        }
+        return 0;
+    }
+
     public getStepsArray = (min: number, stepSize: number): number[] => {
         const stepArray = [];
         for (let i = 0; i < this.countSteps; i++) {
-            stepArray.push(min + i * stepSize);
+            stepArray.push(parseFloat((min + i * stepSize).toFixed(this.countDecimals(stepSize))));
         }
         return stepArray;
     };
